@@ -62,7 +62,7 @@
             left: 0;
             background-color: #222;
             padding-top: 20px;
-            transition: width 0.3s ease-in-out;
+            transition: 0.3s;
             overflow-x: hidden;
         }
 
@@ -155,7 +155,13 @@
 
         @media screen and (max-width: 600px) {
             .sidebar {
-                display: none;
+                width: 250px;
+                left: -250px;
+                transition: left 0.3s ease; /* Slide the sidebar out of view initially */
+            }
+
+            .sidebar.open {
+                left: 0; /* Bring it back when open */
             }
 
             .content {
@@ -166,7 +172,30 @@
                 position: absolute;
                 right: 10px;
             }
+
+            /* Additional styling for collapsed sidebar in mobile view */
+            .sidebar.collapsed {
+                width: 50px;
+                left: -50px;
+            }
+
+            .collapsed + .content {
+                margin-left: 50px;
+            }
         }
+
+        /* Adjust for smaller screens */
+        @media screen and (max-width: 600px) {
+            .navbar .admin-btn {
+                position: absolute;
+                right: 40px;
+                top: 15px; /* Ensure it stays aligned at the top */
+                padding: 8px 8px;
+                width: auto; /* Adjust width to ensure full visibility */
+                font-size: 16px; /* Optional: adjust font size if needed */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -206,8 +235,16 @@
         // Function to toggle sidebar collapse
         function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
+            
+            if (window.innerWidth <= 600) {
+                // Handle mobile view
+                sidebar.classList.toggle('open');
+            } else {
+                // Handle larger screens
+                sidebar.classList.toggle('collapsed');
+            }
         }
+
 
         // Function to dynamically update the content
         function showContent(section) {
