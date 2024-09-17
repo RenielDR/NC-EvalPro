@@ -246,7 +246,6 @@
         }
 
 
-        // Function to dynamically update the content
         function showContent(section) {
             const content = {
                 dashboard: "<h2>Dashboard</h2><p>This is the dashboard section.</p>",
@@ -262,7 +261,14 @@
 
             // Update content dynamically
             document.getElementById('main-content').innerHTML = content[section];
+
+            // Hide the sidebar on mobile after clicking an item
+            if (window.innerWidth <= 600) {
+                var sidebar = document.getElementById('sidebar');
+                sidebar.classList.remove('open'); // Hide the sidebar
+            }
         }
+
 
         // Function for logout (placeholder function)
         function logout() {
