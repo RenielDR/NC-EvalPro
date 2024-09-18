@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Admin Dashboard with Collapsible Sidebar</title>
+    <title>NC - EvalPro</title>
     <style>
         /* General styling */
         body, html {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: Times New Roman, sans-serif;
             height: 100%;
         }
 
@@ -20,7 +20,7 @@
             align-items: center;
             background-color: #333;
             color: white;
-            padding: 20px 20px;
+            padding:10px 20px;
             position: fixed;
             width: 100%;
             top: 0;
@@ -28,29 +28,36 @@
             transition: 0.3s;
         }
 
+        .navbar .nc-logo {
+		    height: 45px; /* Same height as the admin button */
+		    width: auto;  /* Maintain aspect ratio */
+		    padding: 0;   /* Remove default padding if necessary */
+		}
+
         .navbar .logo {
             font-size: 24px;
         }
 
         .navbar .admin-btn {
-            background-color: #555;
+        	border: none;
+            height: 40px; /* Set the height same as the logo */
+            width: auto;
+            cursor: pointer; /* Change cursor on hover */
+            position: absolute;
+            right: 50px;
+        }
+
+        .navbar .hamburger-btn {
+            
             border: none;
             color: white;
             padding: 10px 10px;
             cursor: pointer;
             position: absolute;
-            right: 60px;
-        }
-
-        .navbar .hamburger-btn {
-            background-color: #555;
-            border: none;
-            color: white;
-            padding: 7px 15px;
-            cursor: pointer;
-            position: absolute;
             left: 5px;
             font-size: 24px;
+            height: 40px; /* Same height as the admin button */
+		    width: auto;
         }
 
         /* Side navigation bar */
@@ -188,9 +195,8 @@
         @media screen and (max-width: 600px) {
             .navbar .admin-btn {
                 position: absolute;
-                right: 40px;
-                top: 15px; /* Ensure it stays aligned at the top */
-                padding: 8px 8px;
+                right: 35px;
+                padding: 10px 10px;
                 width: auto; /* Adjust width to ensure full visibility */
                 font-size: 16px; /* Optional: adjust font size if needed */
             }
@@ -202,9 +208,11 @@
 
     <!-- Top navigation bar -->
     <div class="navbar">
-        <button class="hamburger-btn" onclick="toggleSidebar()">&#9776;</button>
-        <div class="logo">Logo</div>
-        <button class="admin-btn">Admin</button>
+
+    	<img src="C:\Users\HP\Desktop\evalllll\Images\hamburger.png" alt="hbgbtn" class="hamburger-btn" onclick="toggleSidebar()">
+        <img src="C:\Users\HP\Desktop\evalllll\Images\NCLOGO.png" alt="NC_LOGO" class="nc-logo">
+        <div class="logo">NC-EvalPro</div>
+        <img src="C:\Users\HP\Desktop\evalllll\Images\profile1.png" alt="Admin" class="admin-btn">
     </div>
 
     <!-- Side navigation bar -->
