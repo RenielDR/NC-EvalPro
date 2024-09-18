@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
     <title>NC - EvalPro</title>
     <style>
         /* General styling */
@@ -20,7 +24,7 @@
             align-items: center;
             background-color: #333;
             color: white;
-            padding:10px 20px;
+            padding:7px 20px;
             position: fixed;
             width: 100%;
             top: 0;
@@ -54,7 +58,7 @@
             padding: 10px 10px;
             cursor: pointer;
             position: absolute;
-            left: 5px;
+            left: 0;
             font-size: 24px;
             height: 40px; /* Same height as the admin button */
 		    width: auto;
@@ -195,13 +199,78 @@
         @media screen and (max-width: 600px) {
             .navbar .admin-btn {
                 position: absolute;
-                right: 35px;
+                right: 30px;
                 padding: 10px 10px;
                 width: auto; /* Adjust width to ensure full visibility */
                 font-size: 16px; /* Optional: adjust font size if needed */
             }
         }
 
+    </style>
+
+    <style>
+
+        h2 {
+            text-align: left;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the table */
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        table thead th {
+            background-color: #f2f2f2;
+            border-bottom: 2px solid #ddd;
+            text-align: left;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Buttons in Action Column */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-buttons .edit-btn,
+        .action-buttons .delete-btn {
+            border: none;
+            padding: 8px 12px;
+            margin-right: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .edit-btn {
+            background-color: #007bff;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        /* Add New button styling */
+        .add-new {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            float: right;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -253,36 +322,103 @@
             }
         }
 
-
         function showContent(section) {
-            const content = {
-                dashboard: "<h2>Dashboard</h2><p>This is the dashboard section.</p>",
-                subjects: "<h2>Subjects</h2><p>This is the subjects section.</p>",
-                classes: "<h2>Classes</h2><p>This is the classes section.</p>",
-                'academic-year': "<h2>Academic Year</h2><p>This is the academic year section.</p>",
-                questionnaires: "<h2>Questionnaires</h2><p>This is the questionnaires section.</p>",
-                faculties: "<h2>Faculties</h2><p>This is the faculties section.</p>",
-                students: "<h2>Students</h2><p>This is the students section.</p>",
-                'evaluation-report': "<h2>Evaluation Report</h2><p>This is the evaluation report section.</p>",
-                user: "<h2>User</h2><p>This is the user section.</p>"
-            };
+	        const content = {
+	            dashboard: "<h2>Dashboard</h2><p>This is the dashboard section.</p>",
+	            subjects: "<h2>Subjects</h2><p>This is the subjects section.</p>",
+	            classes: `
+	                <h2>Class List</h2>
+	                <button class="add-new" onclick="addClass()">+ Add New</button>
 
-            // Update content dynamically
-            document.getElementById('main-content').innerHTML = content[section];
+	                <!-- Table to show class list -->
+	                <table id="classTable" class="display">
+	                    <thead>
+	                        <tr>
+	                            <th>#</th>
+	                            <th>Class</th>
+	                            <th>Action</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody id="class-list">
+	                        <tr>
+	                            <td>1</td>
+	                            <td contenteditable="true">BSIT 1-A</td>
+	                            <td class="action-buttons">
+	                                <button class="edit-btn" onclick="editClass(1)">✏️</button>
+	                                <button class="delete-btn" onclick="deleteClass(1)">🗑️</button>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td>2</td>
+	                            <td contenteditable="true">BSIT 1-B</td>
+	                            <td class="action-buttons">
+	                                <button class="edit-btn" onclick="editClass(2)">✏️</button>
+	                                <button class="delete-btn" onclick="deleteClass(2)">🗑️</button>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td>3</td>
+	                            <td contenteditable="true">BSIT 1-C</td>
+	                            <td class="action-buttons">
+	                                <button class="edit-btn" onclick="editClass(3)">✏️</button>
+	                                <button class="delete-btn" onclick="deleteClass(3)">🗑️</button>
+	                            </td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	            `,
+	            'academic-year': "<h2>Academic Year</h2><p>This is the academic year section.</p>",
+	            questionnaires: "<h2>Questionnaires</h2><p>This is the questionnaires section.</p>",
+	            faculties: "<h2>Faculties</h2><p>This is the faculties section.</p>",
+	            students: "<h2>Students</h2><p>This is the students section.</p>",
+	            'evaluation-report': "<h2>Evaluation Report</h2><p>This is the evaluation report section.</p>",
+	            user: "<h2>User</h2><p>This is the user section.</p>"
+	        };
 
-            // Hide the sidebar on mobile after clicking an item
-            if (window.innerWidth <= 600) {
-                var sidebar = document.getElementById('sidebar');
-                sidebar.classList.remove('open'); // Hide the sidebar
-            }
-        }
+	        // Update content dynamically
+	        document.getElementById('main-content').innerHTML = content[section];
 
+	        // Hide the sidebar on mobile after clicking an item
+	        if (window.innerWidth <= 600) {
+	            var sidebar = document.getElementById('sidebar');
+	            sidebar.classList.remove('open'); // Hide the sidebar
+	        }
+	    }
 
         // Function for logout (placeholder function)
         function logout() {
             alert("You have been logged out.");
             // Logic for logging out can be added here
         }
+
+
+
+        function addClass() {
+	        let classList = document.getElementById('class-list');
+	        let newRow = document.createElement('tr');
+	        let rowCount = classList.rows.length + 1;
+
+	        newRow.innerHTML = `
+	            <td>${rowCount}</td>
+	            <td contenteditable="true">New Class</td>
+	            <td class="action-buttons">
+	                <button class="edit-btn" onclick="editClass(${rowCount})">✏️</button>
+	                <button class="delete-btn" onclick="deleteClass(${rowCount})">🗑️</button>
+	            </td>
+	        `;
+	        classList.appendChild(newRow);
+	    }
+
+	    function editClass(id) {
+	        let row = document.querySelector(`#class-list tr:nth-child(${id}) td:nth-child(2)`);
+	        row.contentEditable = true;
+	        row.focus();
+	    }
+
+	    function deleteClass(id) {
+	        let row = document.querySelector(`#class-list tr:nth-child(${id})`);
+	        row.remove();
+	    }
     </script>
 
     <!-- Font Awesome for Icons (optional, can replace with custom icons if needed) -->
