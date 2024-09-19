@@ -15,6 +15,7 @@
             padding: 0;
             font-family: Times New Roman, sans-serif;
             height: 100%;
+            background-color: #E1E2E3;
         }
 
         /* Top navigation bar */
@@ -22,7 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #333;
+            background-color: #2D3A6E;
             color: white;
             padding:7px 20px;
             position: fixed;
@@ -71,7 +72,7 @@
             position: fixed;
             top: 48px;
             left: 0;
-            background-color: #222;
+            background-color: #051319;
             padding-top: 20px;
             transition: 0.3s;
             overflow-x: hidden;
@@ -212,7 +213,7 @@
 
         h2 {
             text-align: left;
-            font-size: 24px;
+            font-size: 30px;
             margin-bottom: 20px;
         }
 
@@ -225,12 +226,14 @@
 
         table thead th {
             background-color: #f2f2f2;
-            border-bottom: 2px solid #ddd;
+            font-size: 20px;
+            border-bottom: 7px solid #ddd;
             text-align: left;
         }
 
         table tbody tr {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid black;
+            border-spacing: 1px solid black;
         }
 
         /* Buttons in Action Column */
@@ -271,6 +274,65 @@
             float: right;
             margin-bottom: 15px;
         }
+
+
+        /* Styling for bigger, inline buttons */
+		.dashboard-buttons {
+		    display: flex;
+		    gap: 20px; /* Add spacing between buttons */
+		    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+		    justify-content: center; /* Center the buttons */
+		}
+
+		.dashboard-buttons .add-new {
+		    background-color: #FFF44E;
+		    color: black;
+		    border: none;
+		    padding: 20px;
+		    text-align: center;
+		    font-size: 25px;
+		    font-family: Times New Roman, sans-serif;
+		    cursor: pointer;
+		    border-radius: 8px;
+		    display: flex;
+		    flex-direction: column; /* Stack icon and text vertically */
+		    align-items: center;
+		    justify-content: center;
+		    width: 200px; /* Set a fixed width for equal sizes */
+		    height: 200px; /* Set a fixed height for equal sizes */
+		}
+
+		.dashboard-buttons .add-new i {
+		    font-size: 70px;
+		    margin-bottom: 10px;
+		}
+
+		/* Responsive adjustments */
+		@media (max-width: 768px) {
+		    .dashboard-buttons .add-new {
+		        width: 200px;
+		        height: 200px; /* Adjust height for smaller screens */
+		        font-size: 16px; /* Smaller text size */
+		    }
+
+		    .dashboard-buttons .add-new i {
+		        font-size: 50px; /* Smaller icon size */
+		    }
+		}
+
+		@media (max-width: 480px) {
+		    .dashboard-buttons .add-new {
+		        width: 150px;
+		        height: 150px;
+		        font-size: 14px;
+		    }
+
+		    .dashboard-buttons .add-new i {
+		        font-size: 40px;
+		    }
+		}
+
+
     </style>
 </head>
 <body>
@@ -324,8 +386,22 @@
 
         function showContent(section) {
 	        const content = {
-	            dashboard: "<h2>Dashboard</h2><p>This is the dashboard section.</p>",
+	            dashboard: `
+	                <h1>Dashboard</h1>
+	                <div class="dashboard-buttons">
+				        <button class="add-new" onclick="showContent('dashboard')"><i class="fa fa-dashboard"></i>Department</button>
+				        <button class="add-new" onclick="showContent('subjects')"><i class="fa fa-book"></i>Subjects</button>
+				        <button class="add-new" onclick="showContent('classes')"><i class="fa fa-university"></i>Class List</button>
+				        <button class="add-new" onclick="showContent('academic-year')"><i class="fa fa-calendar"></i>Academic Year</button>
+				    </div>
+
+	            `,
+
+
+
 	            subjects: "<h2>Subjects</h2><p>This is the subjects section.</p>",
+
+
 	            classes: `
 	                <h2>Class List</h2>
 	                <button class="add-new" onclick="addClass()">+ Add New</button>
@@ -340,38 +416,23 @@
 	                        </tr>
 	                    </thead>
 	                    <tbody id="class-list">
-	                        <tr>
-	                            <td>1</td>
-	                            <td contenteditable="true">BSIT 1-A</td>
-	                            <td class="action-buttons">
-	                                <button class="edit-btn" onclick="editClass(1)">✏️</button>
-	                                <button class="delete-btn" onclick="deleteClass(1)">🗑️</button>
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td>2</td>
-	                            <td contenteditable="true">BSIT 1-B</td>
-	                            <td class="action-buttons">
-	                                <button class="edit-btn" onclick="editClass(2)">✏️</button>
-	                                <button class="delete-btn" onclick="deleteClass(2)">🗑️</button>
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td>3</td>
-	                            <td contenteditable="true">BSIT 1-C</td>
-	                            <td class="action-buttons">
-	                                <button class="edit-btn" onclick="editClass(3)">✏️</button>
-	                                <button class="delete-btn" onclick="deleteClass(3)">🗑️</button>
-	                            </td>
-	                        </tr>
+	                        
 	                    </tbody>
 	                </table>
 	            `,
 	            'academic-year': "<h2>Academic Year</h2><p>This is the academic year section.</p>",
+
+
 	            questionnaires: "<h2>Questionnaires</h2><p>This is the questionnaires section.</p>",
+
+
 	            faculties: "<h2>Faculties</h2><p>This is the faculties section.</p>",
+
+
 	            students: "<h2>Students</h2><p>This is the students section.</p>",
 	            'evaluation-report': "<h2>Evaluation Report</h2><p>This is the evaluation report section.</p>",
+
+
 	            user: "<h2>User</h2><p>This is the user section.</p>"
 	        };
 
