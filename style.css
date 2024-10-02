@@ -1,5 +1,4 @@
-
-        /* General styling */
+  /* General styling */
         body, html {
             margin: 0;
             padding: 0;
@@ -427,7 +426,6 @@
         .display th, .display td {
             padding: 8px; /* Cell padding */
             text-align: left; /* Align text to the left */
-            border: 1px solid #ddd; /* Border for cells */
             white-space: normal; /* Allow text to wrap */
             overflow: hidden; /* Hide overflow content */
             text-overflow: ellipsis; /* Add ellipsis for overflow text */
@@ -440,10 +438,6 @@
             .display {
                 font-size: 12px; /* Smaller font size */
                 width: 100%; /* Reduce table width */
-            }
-
-            .display th, .display td {
-                padding: 1px; /* Smaller padding */
             }
 
             .display th {
