@@ -6,7 +6,6 @@ function toggleSidebar() {
     if (window.innerWidth <= 600) {
         // Handle mobile view
         sidebar.classList.toggle('open');
-        content.classList.toggle('with-sidebar'); // Adjust content when sidebar is open
     } else {
         // Handle larger screens
         sidebar.classList.toggle('collapsed');
