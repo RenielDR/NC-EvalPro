@@ -185,8 +185,26 @@
 
         <div id="questionnaires" class="content-section">
             <h2>Questionnaires</h2>
-            <p>This is the questionnaires section.</p>
+
+            <!-- Form for adding questions with criteria and radio buttons for answers -->
+            <form id="questionnaireForm">
+                <div id="questionnaire-list">
+                    <!-- Placeholder for dynamically added criteria and questions -->
+                </div>
+
+                <!-- Button to add new criteria -->
+                <button type="button" class="add-new" onclick="addCriteria()">Add New Criteria</button>
+
+                <!-- Button to add new question under the last criteria -->
+                <button type="button" class="add-new" onclick="addQuestion()">Add New Question</button>
+
+                <!-- Submit button for the questionnaire form -->
+                <button type="submit" class="add-new" style="background-color: #28a745;">Submit Questionnaire</button>
+            </form>
         </div>
+
+
+
 
         <div id="faculties" class="content-section">
             <h2>Faculties</h2>
