@@ -6,6 +6,7 @@ function toggleSidebar() {
     if (window.innerWidth <= 600) {
         // Handle mobile view
         sidebar.classList.toggle('open');
+        
     } else {
         // Handle larger screens
         sidebar.classList.toggle('collapsed');
@@ -146,3 +147,92 @@ function searchSubjects() {
         row.style.display = text.includes(input) ? '' : 'none';
     });
 }
+
+
+
+
+
+let totalQuestionCount = 0;  // Tracks total number of questions
+let criteriaCount = 0;       // Tracks the number of criteria
+
+// Function to add a new criteria
+function addCriteria() {
+    criteriaCount++;  // Increment the criteria count
+
+    const questionnaireList = document.getElementById("questionnaire-list");
+
+    // Create a div to hold the new criteria
+    const criteriaDiv = document.createElement("div");
+    criteriaDiv.classList.add("criteria-item");
+    criteriaDiv.setAttribute("id", `criteria-${criteriaCount}`);
+    criteriaDiv.innerHTML = `
+        <h3>Criteria ${criteriaCount}:</h3>
+        <select id="criteria-select-${criteriaCount}" name="criteria${criteriaCount}" required>
+            <option value="">Select Criteria</option>
+            <option value="Teaching Skills">Teaching Skills</option>
+            <option value="Class Management">Class Management</option>
+            <option value="Subject Knowledge">Subject Knowledge</option>
+            <option value="Student Engagement">Student Engagement</option>
+        </select>
+        <div id="questions-for-criteria-${criteriaCount}"></div>
+    `;
+
+    // Append the new criteria to the list
+    questionnaireList.appendChild(criteriaDiv);
+}
+
+// Function to add a new question under the last added criteria
+function addQuestion() {
+    if (criteriaCount === 0) {
+        alert("Please add a criteria first!");
+        return;
+    }
+
+    totalQuestionCount++;  // Increment the total question count for numbering
+
+    const lastCriteriaDiv = document.getElementById(`questions-for-criteria-${criteriaCount}`);
+
+    // Create a div to hold the new question and its radio buttons
+    const questionDiv = document.createElement("div");
+    questionDiv.classList.add("question-item");
+    questionDiv.innerHTML = `
+        <label for="question${totalQuestionCount}">Question ${totalQuestionCount}:</label>
+        <input type="text" id="question${totalQuestionCount}" name="question${totalQuestionCount}" placeholder="Enter your question here" required>
+
+        <!-- Radio buttons for ratings -->
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="rating${totalQuestionCount}" value="5" required> 5 - Outstanding
+            </label>
+            <label>
+                <input type="radio" name="rating${totalQuestionCount}" value="4"> 4 - Highly Satisfactory
+            </label>
+            <label>
+                <input type="radio" name="rating${totalQuestionCount}" value="3"> 3 - Satisfactory
+            </label>
+            <label>
+                <input type="radio" name="rating${totalQuestionCount}" value="2"> 2 - Needs Improvement
+            </label>
+            <label>
+                <input type="radio" name="rating${totalQuestionCount}" value="1"> 1 - Poor
+            </label>
+        </div>
+    `;
+
+    // Append the new question to the last criteria
+    lastCriteriaDiv.appendChild(questionDiv);
+}
+
+// Function to handle form submission
+document.getElementById("questionnaireForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Gather form data
+    const formData = new FormData(this);
+    for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`); // Log each form entry (criteria, question, and rating)
+    }
+
+    // You can process or send this data to your server as needed
+    alert("Questionnaire submitted successfully!");
+});
